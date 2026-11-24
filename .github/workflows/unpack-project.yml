@@ -1,0 +1,27 @@
+name: Unpack TROTUAR AI
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unpack project
+        run: |
+          unzip -o TROTUAR_AI_2.0_DARK_MINIMAL.zip -d .
+          rm TROTUAR_AI_2.0_DARK_MINIMAL.zip
+
+      - name: Save files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Unpack dark minimal project" || exit 0
+          git push
